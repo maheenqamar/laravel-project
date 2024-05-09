@@ -106,11 +106,6 @@
           <button class="custom-btn btn-block">Archive Products</button>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('orderDetails') }}">
-          <button class="custom-btn btn-block">Order Details</button>
-        </a>
-      </li>
     </ul>
   </nav>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

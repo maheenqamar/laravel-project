@@ -7,6 +7,11 @@ use App\Http\Requests\Validation;
 use App\Http\Requests\ForgetValidation;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ForgotPasswordMail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 
 class UserController extends Controller
@@ -37,8 +42,8 @@ class UserController extends Controller
 
     public function loggedin(LoginValidation $request)
     {
-         // $user = new User();
-         $userData = User::getUserByEmail($request->userEmail);
+         $user = new User();
+         $userData = $user->getUserByEmail($request->userEmail);
          if ($userData && Hash::check($request->userPassword, $userData->userPassword)) {
              Session::put('user_id', $userData->user_id);
              Session::put('usernames', $userData->usernames);
@@ -55,7 +60,8 @@ class UserController extends Controller
 
     public function resetpassword(Request $request)
     {
-        $user_data = User::getUserById(session('user_id'));
+        $user = new User();
+        $user_data = $user->getUserById(session('user_id'));
         if (Hash::check($request->oldPassword, $user_data->userPassword)) {
             if ($request->newPassword === $request->confirmPassword) {
                 $user_data->userPassword = Hash::make($request->newPassword);
@@ -81,7 +87,9 @@ class UserController extends Controller
 
     public function sendlink(ForgetValidation $request)
     {
-        $user = User::getUserByEmail($request->userEmail);
+        
+        $user = new User();
+        $user = $user->getUserByEmail($request->userEmail);
         if(!empty($user))
         {
             $user->remember_token = Str::random(30);
@@ -97,7 +105,8 @@ class UserController extends Controller
 
     public function resetscreen($remember_token)
     {
-        $user = User::getUserByToken($remember_token);
+        $user = new User();
+        $user = $user->getUserByToken($remember_token);
 
         if (!empty($user)) {
             $data['user'] = $user;
@@ -109,7 +118,8 @@ class UserController extends Controller
 
     public function pwreset($token, Request $request)
     {
-        $user_data = User::getUserByToken($token);
+        $user = new User();
+        $user_data = $user->getUserByToken($token);
         if ($request->userPassword === $request->cuserPassword) {
             $user_data->userPassword = Hash::make($request->userPassword);
             $user_data->remember_token = Str::random(30);

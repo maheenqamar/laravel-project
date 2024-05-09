@@ -7,7 +7,7 @@
         @method('PUT')
       <div class="form-group">
         <label for="sku">Product SKU:</label>
-        <input type="text" class="form-control" id="sku" value="{{$currentProduct->productSKU}}" name="productSKU" required>
+        <input type="number" class="form-control" id="sku" value="{{$currentProduct->productSKU}}" name="productSKU" required>
       </div>
       <div class="form-group">
         <label for="name">Product Name:</label>
@@ -32,7 +32,7 @@
       </div>
       <div class="form-group">
         <label for="weight">Product Weight:</label>
-        <input type="text" class="form-control" id="weight" value="{{$currentProduct->productWeight}}" name="productWeight" required>
+        <input type="number" class="form-control" id="weight" value="{{$currentProduct->productWeight}}" name="productWeight" required>
       </div>
       <div class="form-group">
         <label for="cart-desc">Product Cart Description:</label>
